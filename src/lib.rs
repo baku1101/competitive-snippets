@@ -20,6 +20,28 @@ where
     }
 }
 
+pub trait SetMinMaxEq {
+    fn setmineq(&mut self, v: Self) -> bool;
+    fn setmaxeq(&mut self, v: Self) -> bool;
+}
+impl<T> SetMinMaxEq for T
+where
+    T: PartialOrd,
+{
+    fn setmineq(&mut self, v: T) -> bool {
+        *self >= v && {
+            *self = v;
+            true
+        }
+    }
+    fn setmaxeq(&mut self, v: T) -> bool {
+        *self <= v && {
+            *self = v;
+            true
+        }
+    }
+}
+
 /// 時間計測開始時に一度呼び出し、その後呼ぶと経過時間が秒で返ってくる。
 /// const TL: f64 = 1.95;
 /// loop {
